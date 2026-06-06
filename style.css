@@ -4,7 +4,7 @@
   --bg:       #050810;
   --surface:  #0b0f1a;
   --border:   rgba(255,255,255,0.07);
-  --green:    #00ff88;
+  --blue:    #4286f4;
   --green-dim:#00cc6a;
   --teal:     #00e5ff;
   --text:     #c8d6e5;
@@ -51,8 +51,8 @@ canvas#grid-canvas {
 
 .badge {
   display: inline-block;
-  border: 1px solid var(--green);
-  color: var(--green);
+  border: 1px solid var(--blue);
+  color: var(--blue);
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -72,7 +72,7 @@ h1 {
   animation: fadeUp 0.6s 0.1s ease both;
 }
 
-h1 span { color: var(--green); }
+h1 span { color: var(--blue); }
 
 .tagline {
   margin-top: 1.5rem;
@@ -107,7 +107,7 @@ h1 span { color: var(--green); }
 }
 
 .btn-primary {
-  background: var(--green);
+  background: var(--blue);
   color: #050810;
   font-weight: 500;
 }
@@ -118,7 +118,7 @@ h1 span { color: var(--green); }
   border: 1px solid var(--border);
   color: var(--text);
 }
-.btn-ghost:hover { border-color: var(--green); color: var(--green); }
+.btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
 
 .scroll-hint {
   position: absolute;
@@ -138,7 +138,7 @@ h1 span { color: var(--green); }
 .scroll-line {
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--green), transparent);
+  background: linear-gradient(to bottom, var(--blue), transparent);
   animation: scrollPulse 1.8s ease-in-out infinite;
 }
 
@@ -153,7 +153,7 @@ section {
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--blue);
   margin-bottom: 1rem;
 }
 
@@ -195,7 +195,7 @@ h2 {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--green), var(--teal));
+  background: linear-gradient(90deg, var(--blue), var(--teal));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s;
@@ -207,7 +207,7 @@ h2 {
   width: 36px;
   height: 36px;
   margin-bottom: 1.2rem;
-  color: var(--green);
+  color: var(--blue);
 }
 
 .feat-title {
@@ -342,7 +342,7 @@ pre {
 }
 
 .arch-table td:first-child {
-  color: var(--green);
+  color: var(--blue);
   white-space: nowrap;
   min-width: 140px;
 }
@@ -382,7 +382,7 @@ footer {
   color: var(--muted);
 }
 
-footer a { color: var(--green); text-decoration: none; }
+footer a { color: var(--blue); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
 /* ── KEYFRAMES ───────────────────────────────────────────────────────── */
