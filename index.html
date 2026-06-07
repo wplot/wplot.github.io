@@ -122,18 +122,16 @@
         <div class="feat-desc">Grid, surfaces, and point clouds layer correctly in 3D. Dedicated pipelines per draw type
           ensure proper depth ordering every frame.</div>
       </div>
-      <div class="feature-card feature-card--soon">
-        <div class="soon-shimmer"></div>
-        <svg class="feat-icon soon-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-          <path stroke-linecap="round" stroke-linejoin="round" d="M18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+      <div class="feature-card">
+        <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3c0 0 2 6 4.5 9s5.5 5.25 8.25 5.25" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21c0 0 3-3.75 6-6.75S16.5 9 20.25 9" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
         </svg>
-        <div class="feat-title">Coming Soon</div>
-        <div class="feat-desc">More plot types and features are on the roadmap.</div>
-        <ul class="soon-list">
-          <li><span class="soon-dot"></span>Export to PNG &amp; SVG</li>
-        </ul>
-        <div class="soon-badge">in progress</div>
+        <div class="feat-title">Parametric Curve Plots</div>
+        <div class="feat-desc">Render 3D curves from a parameter <code style="color:var(--green)">u → [x, y, z]</code> —
+          static helices, animated Lissajous figures, or any trajectory through space. Both static and time-varying
+          variants supported.</div>
       </div>
     </div>
   </section>
@@ -212,6 +210,7 @@
         <span class="code-filename">your_app.rs</span>
       </div>
       <pre><span class="kw">use</span> wplot::{<span class="ty">PlotData</span>, <span class="ty">PlotConfig</span>, <span class="ty">LegendEntry</span>, <span class="fn">plot_wireframe</span>};
+<span class="kw">use</span> std::f32::consts::PI;
 
 <span class="kw">let</span> range: <span class="ty">Vec</span>&lt;<span class="ty">f32</span>&gt; <span class="op">=</span> (<span class="num">0</span>..<span class="num">60</span>)
     .<span class="fn">map</span>(|i| <span class="op">-</span><span class="num">5.0</span> <span class="op">+</span> (i <span class="kw">as</span> <span class="ty">f32</span> <span class="op">/</span> <span class="num">59.0</span>) <span class="op">*</span> <span class="num">10.0</span>)
@@ -221,8 +220,10 @@
     grid_size: <span class="num">12.0</span>,
     grid_divisions: <span class="num">12</span>,
     legend: <span class="mac">vec!</span>[
-        <span class="ty">LegendEntry</span> { label: <span class="str">"sin(r)"</span>.<span class="fn">into</span>(),  color: [<span class="num">0.2</span>, <span class="num">0.5</span>, <span class="num">1.0</span>] },
-        <span class="ty">LegendEntry</span> { label: <span class="str">"wave"</span>.<span class="fn">into</span>(),   color: [<span class="num">1.0</span>, <span class="num">0.45</span>, <span class="num">0.15</span>] },
+        <span class="ty">LegendEntry</span> { label: <span class="str">"sin(r)"</span>.<span class="fn">into</span>(),    color: [<span class="num">0.2</span>, <span class="num">0.5</span>, <span class="num">1.0</span>] },
+        <span class="ty">LegendEntry</span> { label: <span class="str">"wave"</span>.<span class="fn">into</span>(),      color: [<span class="num">1.0</span>, <span class="num">0.45</span>, <span class="num">0.15</span>] },
+        <span class="ty">LegendEntry</span> { label: <span class="str">"helix"</span>.<span class="fn">into</span>(),     color: [<span class="num">1.0</span>, <span class="num">0.4</span>, <span class="num">0.1</span>] },
+        <span class="ty">LegendEntry</span> { label: <span class="str">"lissajous"</span>.<span class="fn">into</span>(), color: [<span class="num">0.9</span>, <span class="num">0.2</span>, <span class="num">0.8</span>] },
     ],
     show_axis_labels: <span class="kw">false</span>,
     ..<span class="ty">Default</span><span class="op">::</span><span class="fn">default</span>()
@@ -230,13 +231,13 @@
 
 <span class="kw">let</span> plot_data <span class="op">=</span> <span class="ty">PlotData</span><span class="op">::</span><span class="fn">new</span>()
     .<span class="fn">with_config</span>(config)
-    <span class="cm">// Static surface</span>
+    <span class="cm">// Static surface: sin(r)</span>
     .<span class="fn">add_graph</span>(<span class="fn">plot_wireframe</span>(
         <span class="op">&amp;</span>range, <span class="op">&amp;</span>range,
         |x, z| (x<span class="op">*</span>x <span class="op">+</span> z<span class="op">*</span>z).<span class="fn">sqrt</span>().<span class="fn">sin</span>(),
         [<span class="num">0.2</span>, <span class="num">0.5</span>, <span class="num">1.0</span>],
     ))
-    <span class="cm">// Animated surface</span>
+    <span class="cm">// Animated surface: outward ripple</span>
     .<span class="fn">add_animated_graph</span>(
         range.<span class="fn">clone</span>(), range.<span class="fn">clone</span>(),
         |x, z, t| {
@@ -244,6 +245,18 @@
             (r <span class="op">-</span> t <span class="op">*</span> <span class="num">2.5</span>).<span class="fn">sin</span>() <span class="op">*</span> (<span class="op">-</span>r <span class="op">*</span> <span class="num">0.15</span>).<span class="fn">exp</span>()
         },
         [<span class="num">1.0</span>, <span class="num">0.45</span>, <span class="num">0.15</span>],
+    )
+    <span class="cm">// Static helix</span>
+    .<span class="fn">add_parametric_curve</span>(
+        (<span class="num">0</span><span class="op">..=</span><span class="num">400</span>).<span class="fn">map</span>(|i| i <span class="kw">as</span> <span class="ty">f32</span> <span class="op">/</span> <span class="num">400.0</span> <span class="op">*</span> <span class="num">6.0</span> <span class="op">*</span> PI).<span class="fn">collect</span>::&lt;<span class="ty">Vec</span>&lt;<span class="kw">_</span>&gt;&gt;(),
+        |u| [<span class="num">3.0</span> <span class="op">*</span> u.<span class="fn">cos</span>(), u <span class="op">*</span> <span class="num">0.3</span>, <span class="num">3.0</span> <span class="op">*</span> u.<span class="fn">sin</span>()],
+        [<span class="num">1.0</span>, <span class="num">0.4</span>, <span class="num">0.1</span>],
+    )
+    <span class="cm">// Animated Lissajous figure</span>
+    .<span class="fn">add_animated_parametric_curve</span>(
+        (<span class="num">0</span><span class="op">..=</span><span class="num">300</span>).<span class="fn">map</span>(|i| i <span class="kw">as</span> <span class="ty">f32</span> <span class="op">/</span> <span class="num">300.0</span> <span class="op">*</span> <span class="num">2.0</span> <span class="op">*</span> PI).<span class="fn">collect</span>::&lt;<span class="ty">Vec</span>&lt;<span class="kw">_</span>&gt;&gt;(),
+        |u, t| [<span class="num">3.0</span> <span class="op">*</span> (<span class="num">2.0</span> <span class="op">*</span> u <span class="op">+</span> t).<span class="fn">sin</span>(), <span class="num">3.0</span> <span class="op">*</span> (<span class="num">3.0</span> <span class="op">*</span> u).<span class="fn">sin</span>(), u.<span class="fn">cos</span>() <span class="op">*</span> <span class="num">2.0</span>],
+        [<span class="num">0.9</span>, <span class="num">0.2</span>, <span class="num">0.8</span>],
     );</pre>
     </div>
   </section>
@@ -328,9 +341,9 @@
     <p style="margin-bottom:0.5rem">
       <strong style="color:var(--white);font-family:'Syne',sans-serif">wplot</strong> &nbsp;—&nbsp; Apache-2.0 License
     </p>
-    <p>Built with <a href="https://wgpu.rs">wgpu</a>, <a href="https://github.com/rust-windowing/winit">winit</a>, <a
-        href="https://github.com/bitshifter/glam-rs">glam</a> &amp; <a
-        href="https://github.com/grovesNL/glyphon">glyphon</a> &nbsp;·&nbsp; <a
+    <p>Built with <a href="https://wgpu.rs">wgpu</a>, <a href="https://crates.io/crates/winit">winit</a>, <a
+        href="https://crates.io/crates/glam">glam</a> &amp; <a
+        href="https://crates.io/crates/glyphon">glyphon</a> &nbsp;·&nbsp; <a
         href="https://github.com/wplot/wplot">github.com/wplot/wplot</a></p>
   </footer>
 
