@@ -1,95 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>wplot — 3D Plotting in Rust</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- ── HERO ────────────────────────────────────────────────────────────── -->
-<section id="hero">
-  <canvas id="grid-canvas"></canvas>
-  <div class="hero-content">
-    <div class="badge">GPU-accelerated · Rust + wgpu</div>
-    <h1><span>w</span>plot</h1>
-    <p class="tagline">Lightweight 3D data visualization built for Rust. Render animated mathematical surfaces in real-time with a clean, builder-style API.</p>
-    <div class="hero-ctas">
-      <a href="https://github.com/wplot/wplot" class="btn btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-        View on GitHub
-      </a>
-      <a href="#quickstart" class="btn btn-ghost">Quick Start ↓</a>
+  <!-- ── HERO ────────────────────────────────────────────────────────────── -->
+  <section id="hero">
+    <canvas id="grid-canvas"></canvas>
+    <div class="hero-content">
+      <div class="badge">GPU-accelerated · Rust + wgpu</div>
+      <h1><span>w</span>plot</h1>
+      <p class="tagline">Lightweight 3D data visualization built for Rust. Render animated mathematical surfaces in
+        real-time with a clean, builder-style API.</p>
+      <div class="hero-ctas">
+        <a href="https://github.com/wplot/wplot" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+          </svg>
+          View on GitHub
+        </a>
+        <a href="#quickstart" class="btn btn-ghost">Quick Start ↓</a>
+      </div>
     </div>
-  </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    <span>scroll</span>
-  </div>
-</section>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>scroll</span>
+    </div>
+  </section>
 
-<!-- ── FEATURES ─────────────────────────────────────────────────────────── -->
-<section id="features">
-  <div class="reveal">
-    <div class="section-label">// capabilities</div>
-    <h2>Everything you need to visualize data in 3D</h2>
-    <p class="lead">A focused, zero-boilerplate rendering engine with a builder API. Drop in a closure, get an animated surface.</p>
-  </div>
-
-  <div class="features-grid reveal">
-    <div class="feature-card">
-      <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/></svg>
-      <div class="feat-title">Cross-Platform GPU Rendering</div>
-      <div class="feat-desc">Built on wgpu — runs on Vulkan, Metal, and DirectX 12 with zero platform-specific code on your end.</div>
-    </div>
-    <div class="feature-card">
-      <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z"/></svg>
-      <div class="feat-title">Animated Surfaces</div>
-      <div class="feat-desc">Time-varying meshes driven by <code style="color:var(--green)">f(x, z, t) → y</code> closures. Every frame resamples your function automatically.</div>
-    </div>
-    <div class="feature-card">
-      <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"/></svg>
-      <div class="feat-title">Static Wireframe Plots</div>
-      <div class="feat-desc">Render any <code style="color:var(--green)">f(x, z) → y</code> as a wireframe mesh with automatic Y-gradient coloring. Multiple graphs per scene.</div>
-    </div>
-    <div class="feature-card">
-      <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
-      <div class="feat-title">Scatter Plots</div>
-      <div class="feat-desc">Efficient point-cloud rendering via a dedicated point-list pipeline, separate from surface meshes for correct compositing.</div>
-    </div>
-    <div class="feature-card">
-      <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
-      <div class="feat-title">Orbit Camera</div>
-      <div class="feat-desc">Spherical-coordinate camera with drag-to-orbit and scroll-to-zoom. Pitch clamped to avoid gimbal lock. Aspect-correct projection.</div>
-    </div>
-    <div class="feature-card">
-      <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/></svg>
-      <div class="feat-title">Legend Overlay</div>
-      <div class="feat-desc">Per-graph labels rendered with GPU-accelerated glyphon text. Configure labels and colors via <code style="color:var(--green)">PlotConfig</code>.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ── DEMO ──────────────────────────────────────────────────────────────── -->
-<div id="demo">
-  <div class="inner">
-    <div class="wave-canvas-wrap reveal">
-      <canvas id="wave-canvas" width="460" height="460"></canvas>
-      <div class="canvas-label">live preview — Gaussian ripple</div>
-    </div>
+  <!-- ── FEATURES ─────────────────────────────────────────────────────────── -->
+  <section id="features">
     <div class="reveal">
-      <div class="section-label">// animated_graph</div>
-      <h2>Gaussian ripple wave</h2>
-      <p style="color:var(--muted);font-size:13px;margin-bottom:2rem;">The animation running in <em>main.rs</em> — a Gaussian-enveloped cosine wave propagating outward over time. The canvas on the left is a live JavaScript reproduction of the same math.</p>
-      <div class="code-scroll">
-        <div class="code-header">
-          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-          <span class="code-filename">main.rs</span>
-        </div>
-        <pre><span class="kw">let</span> plot_data <span class="op">=</span> <span class="ty">PlotData</span><span class="op">::</span><span class="fn">new</span>()
+      <div class="section-label">// capabilities</div>
+      <h2>Everything you need to visualize data in 3D</h2>
+      <p class="lead">A focused, zero-boilerplate rendering engine with a builder API. Drop in a closure, get an
+        animated surface.</p>
+    </div>
+
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" />
+        </svg>
+        <div class="feat-title">Cross-Platform GPU Rendering</div>
+        <div class="feat-desc">Built on wgpu — runs on Vulkan, Metal, and DirectX 12 with zero platform-specific code on
+          your end.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+        <div class="feat-title">Animated Surfaces</div>
+        <div class="feat-desc">Time-varying meshes driven by <code style="color:var(--green)">f(x, z, t) → y</code>
+          closures. Every frame resamples your function automatically.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+        </svg>
+        <div class="feat-title">Static Wireframe Plots</div>
+        <div class="feat-desc">Render any <code style="color:var(--green)">f(x, z) → y</code> as a wireframe mesh with
+          automatic Y-gradient coloring. Multiple graphs per scene.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+        </svg>
+        <div class="feat-title">Scatter Plots</div>
+        <div class="feat-desc">Efficient point-cloud rendering via a dedicated point-list pipeline, separate from
+          surface meshes for correct compositing.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+        </svg>
+        <div class="feat-title">Orbit Camera</div>
+        <div class="feat-desc">Spherical-coordinate camera with drag-to-orbit and scroll-to-zoom. Pitch clamped to avoid
+          gimbal lock. Aspect-correct projection.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+        </svg>
+        <div class="feat-title">Legend Overlay</div>
+        <div class="feat-desc">Per-graph labels rendered with GPU-accelerated glyphon text. Configure labels and colors
+          via <code style="color:var(--green)">PlotConfig</code>.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+        </svg>
+        <div class="feat-title">Axis Tick Labels</div>
+        <div class="feat-desc">Numeric labels on all three axes, projected from 3D world space each frame using
+          GPU-accelerated glyphon text rendering.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feat-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
+        </svg>
+        <div class="feat-title">Depth-Correct Compositing</div>
+        <div class="feat-desc">Grid, surfaces, and point clouds layer correctly in 3D. Dedicated pipelines per draw type
+          ensure proper depth ordering every frame.</div>
+      </div>
+      <div class="feature-card feature-card--soon">
+        <div class="soon-shimmer"></div>
+        <svg class="feat-icon soon-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+        </svg>
+        <div class="feat-title">Coming Soon</div>
+        <div class="feat-desc">More plot types and features are on the roadmap.</div>
+        <ul class="soon-list">
+          <li><span class="soon-dot"></span>Export to PNG &amp; SVG</li>
+        </ul>
+        <div class="soon-badge">in progress</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DEMO ──────────────────────────────────────────────────────────────── -->
+  <div id="demo">
+    <div class="inner">
+      <div class="wave-canvas-wrap reveal">
+        <canvas id="wave-canvas" width="460" height="460"></canvas>
+        <div class="canvas-label">live preview — Gaussian ripple</div>
+      </div>
+      <div class="reveal">
+        <div class="section-label">// animated_graph</div>
+        <h2>Gaussian ripple wave</h2>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:2rem;">The animation running in <em>main.rs</em> — a
+          Gaussian-enveloped cosine wave propagating outward over time. The canvas on the left is a live JavaScript
+          reproduction of the same math.</p>
+        <div class="code-scroll">
+          <div class="code-header">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span class="code-filename">main.rs</span>
+          </div>
+          <pre><span class="kw">let</span> plot_data <span class="op">=</span> <span class="ty">PlotData</span><span class="op">::</span><span class="fn">new</span>()
     .<span class="fn">with_config</span>(config)
     .<span class="fn">add_animated_graph</span>(
         range.<span class="fn">clone</span>(), range.<span class="fn">clone</span>(),
@@ -102,42 +171,47 @@
         },
         [<span class="num">0.1</span>, <span class="num">0.8</span>, <span class="num">0.4</span>], <span class="cm">// base color</span>
     );</pre>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ── QUICK START ───────────────────────────────────────────────────────── -->
-<section id="quickstart">
-  <div class="reveal">
-    <div class="section-label">// quick_start</div>
-    <h2>Up and running in seconds</h2>
-    <p class="lead">Clone the repo and run — no configuration files, no external dependencies beyond the Rust toolchain.</p>
-  </div>
-
-  <div class="code-scroll reveal">
-    <div class="code-header">
-      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-      <span class="code-filename">terminal</span>
+  <!-- ── QUICK START ───────────────────────────────────────────────────────── -->
+  <section id="quickstart">
+    <div class="reveal">
+      <div class="section-label">// quick_start</div>
+      <h2>Up and running in seconds</h2>
+      <p class="lead">Clone the repo and run — no configuration files, no external dependencies beyond the Rust
+        toolchain.</p>
     </div>
-    <pre style="color:#86efac"><span style="color:var(--muted)">$</span> git clone https://github.com/wplot/wplot
+
+    <div class="code-scroll reveal">
+      <div class="code-header">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="code-filename">terminal</span>
+      </div>
+      <pre style="color:#86efac"><span style="color:var(--muted)">$</span> git clone https://github.com/wplot/wplot
 <span style="color:var(--muted)">$</span> cd wplot
 <span style="color:var(--muted)">$</span> cargo run --release</pre>
-  </div>
-
-  <div style="height:3rem"></div>
-
-  <div class="reveal">
-    <div class="section-label" style="margin-top:0">// usage_example</div>
-    <h2>Build a scene in a few lines</h2>
-  </div>
-
-  <div class="code-scroll reveal">
-    <div class="code-header">
-      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-      <span class="code-filename">your_app.rs</span>
     </div>
-    <pre><span class="kw">use</span> wplot::{<span class="ty">PlotData</span>, <span class="ty">PlotConfig</span>, <span class="ty">LegendEntry</span>, <span class="fn">plot_wireframe</span>};
+
+    <div style="height:3rem"></div>
+
+    <div class="reveal">
+      <div class="section-label" style="margin-top:0">// usage_example</div>
+      <h2>Build a scene in a few lines</h2>
+    </div>
+
+    <div class="code-scroll reveal">
+      <div class="code-header">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="code-filename">your_app.rs</span>
+      </div>
+      <pre><span class="kw">use</span> wplot::{<span class="ty">PlotData</span>, <span class="ty">PlotConfig</span>, <span class="ty">LegendEntry</span>, <span class="fn">plot_wireframe</span>};
 
 <span class="kw">let</span> range: <span class="ty">Vec</span>&lt;<span class="ty">f32</span>&gt; <span class="op">=</span> (<span class="num">0</span>..<span class="num">60</span>)
     .<span class="fn">map</span>(|i| <span class="op">-</span><span class="num">5.0</span> <span class="op">+</span> (i <span class="kw">as</span> <span class="ty">f32</span> <span class="op">/</span> <span class="num">59.0</span>) <span class="op">*</span> <span class="num">10.0</span>)
@@ -148,8 +222,9 @@
     grid_divisions: <span class="num">12</span>,
     legend: <span class="mac">vec!</span>[
         <span class="ty">LegendEntry</span> { label: <span class="str">"sin(r)"</span>.<span class="fn">into</span>(),  color: [<span class="num">0.2</span>, <span class="num">0.5</span>, <span class="num">1.0</span>] },
-        <span class="ty">LegendEntry</span> { label: <span class="str">"ripple"</span>.<span class="fn">into</span>(), color: [<span class="num">1.0</span>, <span class="num">0.45</span>, <span class="num">0.15</span>] },
+        <span class="ty">LegendEntry</span> { label: <span class="str">"wave"</span>.<span class="fn">into</span>(),   color: [<span class="num">1.0</span>, <span class="num">0.45</span>, <span class="num">0.15</span>] },
     ],
+    show_axis_labels: <span class="kw">false</span>,
     ..<span class="ty">Default</span><span class="op">::</span><span class="fn">default</span>()
 };
 
@@ -170,59 +245,96 @@
         },
         [<span class="num">1.0</span>, <span class="num">0.45</span>, <span class="num">0.15</span>],
     );</pre>
-  </div>
-</section>
-
-<!-- ── ARCHITECTURE ──────────────────────────────────────────────────────── -->
-<section id="architecture" style="padding-top:0">
-  <div class="reveal">
-    <div class="section-label">// architecture</div>
-    <h2>Clean, layered design</h2>
-    <p class="lead">Each file has one job. The rendering pipeline never leaks into your data definitions.</p>
-  </div>
-
-  <div class="reveal" style="border:1px solid var(--border); overflow:hidden;">
-    <table class="arch-table">
-      <thead>
-        <tr><th>File</th><th>Responsibility</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>main.rs</td><td>winit event loop, input routing, scene definition</td></tr>
-        <tr><td>renderer.rs</td><td>wgpu device, pipelines, and render loop — the only file that touches the GPU</td></tr>
-        <tr><td>camera.rs</td><td>Spherical-coordinate orbit camera with clamped pitch and zoom</td></tr>
-        <tr><td>geometry.rs</td><td>Mesh generation: 3-face grid box, wireframe surfaces, scatter clouds</td></tr>
-        <tr><td>mesh.rs</td><td>CPU-side vertex/index storage and multi-mesh merging</td></tr>
-        <tr><td>data.rs</td><td><code style="color:var(--green)">PlotData</code> builder and animated graph definitions</td></tr>
-        <tr><td>config.rs</td><td><code style="color:var(--green)">PlotConfig</code>, legend entries, background color</td></tr>
-        <tr><td>vertex.rs</td><td>GPU vertex layout — <code style="color:var(--green)">Float32x4</code> position + color, bytemuck-compatible</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="controls-row reveal">
-    <div class="ctrl">
-      <span class="ctrl-key">Drag</span>
-      <span class="ctrl-desc">Left-click + drag to orbit yaw &amp; pitch</span>
     </div>
-    <div class="ctrl">
-      <span class="ctrl-key">Scroll</span>
-      <span class="ctrl-desc">Mouse wheel to zoom in &amp; out</span>
-    </div>
-    <div class="ctrl">
-      <span class="ctrl-key">Resize</span>
-      <span class="ctrl-desc">Viewport and depth buffer update automatically</span>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── FOOTER ────────────────────────────────────────────────────────────── -->
-<footer>
-  <p style="margin-bottom:0.5rem">
-    <strong style="color:var(--white);font-family:'Syne',sans-serif">wplot</strong> &nbsp;—&nbsp; Apache-2.0 License
-  </p>
-  <p>Built with <a href="https://wgpu.rs">wgpu</a>, <a href="https://github.com/rust-windowing/winit">winit</a>, <a href="https://github.com/bitshifter/glam-rs">glam</a> &amp; <a href="https://github.com/grovesNL/glyphon">glyphon</a> &nbsp;·&nbsp; <a href="https://github.com/wplot/wplot">github.com/wplot/wplot</a></p>
-</footer>
+  <!-- ── ARCHITECTURE ──────────────────────────────────────────────────────── -->
+  <section id="architecture" style="padding-top:0">
+    <div class="reveal">
+      <div class="section-label">// architecture</div>
+      <h2>Clean, layered design</h2>
+      <p class="lead">Each file has one job. The rendering pipeline never leaks into your data definitions.</p>
+    </div>
 
-<script src="main.js"></script>
+    <div class="reveal" style="border:1px solid var(--border); overflow:hidden;">
+      <table class="arch-table">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Responsibility</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>main.rs</td>
+            <td>winit event loop, input routing (left + middle mouse, scroll)</td>
+          </tr>
+          <tr>
+            <td>renderer.rs</td>
+            <td>wgpu device, pipelines, render loop; axis tick label projection</td>
+          </tr>
+          <tr>
+            <td>camera.rs</td>
+            <td>Spherical-coordinate orbit camera with pan support (<code
+                style="color:var(--green)">target: Vec3</code>)</td>
+          </tr>
+          <tr>
+            <td>geometry.rs</td>
+            <td>Mesh generation: grid, wireframe, scatter</td>
+          </tr>
+          <tr>
+            <td>mesh.rs</td>
+            <td>CPU-side vertex/index storage and multi-mesh merging</td>
+          </tr>
+          <tr>
+            <td>data.rs</td>
+            <td><code style="color:var(--green)">PlotData</code> builder and animated graph definitions</td>
+          </tr>
+          <tr>
+            <td>config.rs</td>
+            <td><code style="color:var(--green)">PlotConfig</code>, legend entries, background color</td>
+          </tr>
+          <tr>
+            <td>vertex.rs</td>
+            <td>GPU vertex layout — <code style="color:var(--green)">Float32x4</code> position + color,
+              bytemuck-compatible</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="controls-row reveal" style="grid-template-columns: repeat(4, 1fr)">
+      <div class="ctrl">
+        <span class="ctrl-key">Left Drag</span>
+        <span class="ctrl-desc">Orbit — yaw &amp; pitch around the scene</span>
+      </div>
+      <div class="ctrl">
+        <span class="ctrl-key">Mid Drag</span>
+        <span class="ctrl-desc">Pan — shift the look-at target</span>
+      </div>
+      <div class="ctrl">
+        <span class="ctrl-key">Scroll</span>
+        <span class="ctrl-desc">Zoom in &amp; out</span>
+      </div>
+      <div class="ctrl">
+        <span class="ctrl-key">Resize</span>
+        <span class="ctrl-desc">Viewport and depth buffer update automatically</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────────────────── -->
+  <footer>
+    <p style="margin-bottom:0.5rem">
+      <strong style="color:var(--white);font-family:'Syne',sans-serif">wplot</strong> &nbsp;—&nbsp; Apache-2.0 License
+    </p>
+    <p>Built with <a href="https://wgpu.rs">wgpu</a>, <a href="https://github.com/rust-windowing/winit">winit</a>, <a
+        href="https://github.com/bitshifter/glam-rs">glam</a> &amp; <a
+        href="https://github.com/grovesNL/glyphon">glyphon</a> &nbsp;·&nbsp; <a
+        href="https://github.com/wplot/wplot">github.com/wplot/wplot</a></p>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
+
 </html>
